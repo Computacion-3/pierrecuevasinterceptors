@@ -3,6 +3,7 @@ import {
     Get,
     Post,
     Body,
+    UseInterceptors,
     Patch,
     Param,
     Delete,
@@ -13,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
+import { CryptoInterceptor } from '../../common/interceptors/crypto.interceptor';
 import { PositiveIntPipe } from '../../common/pipes/positive-int-pipe';
 import { PermissionsGuard } from '../guards/permissions/permissions.guard';
 import { Permissions } from '../decorators/permissions.decorator';
@@ -21,6 +23,7 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+@UseInterceptors(CryptoInterceptor)
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
